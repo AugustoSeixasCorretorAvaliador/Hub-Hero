@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#050b14">
+  <title>HERO.IA HUB — Ecossistema de tecnologia, IA e inovação</title>
+  <meta name="description" content="Acesse todo o ecossistema HERO.IA: inteligência artificial, automação, mapas, robótica, impressão 3D, treinamento e desenvolvimento de sistemas.">
+  <meta property="og:title" content="HERO.IA HUB — Um ecossistema. Múltiplas soluções.">
+  <meta property="og:description" content="O ponto central para conhecer e acessar as soluções do ecossistema HERO.IA.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://hero.ia.br/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #050b14;
+      --bg-soft: #081321;
+      --panel: rgba(12, 25, 42, .84);
+      --panel-strong: #0d1b2c;
+      --line: rgba(148, 184, 211, .16);
+      --line-strong: rgba(75, 229, 216, .4);
+      --text: #f3f8fc;
+      --muted: #9aafc1;
+      --cyan: #4be5d8;
+      --cyan-deep: #16a99e;
+      --blue: #5da9ff;
+      --amber: #ffb15c;
+      --danger: #ff7b82;
+      --display: "Manrope", sans-serif;
+      --mono: "Space Mono", monospace;
+      --radius: 22px;
+      --max: 1200px;
+      --shadow: 0 28px 80px rgba(0, 0, 0, .32);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    * { margin: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+    body {
+      min-width: 320px;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at 12% 5%, rgba(31, 108, 165, .2), transparent 32rem),
+        radial-gradient(circle at 90% 28%, rgba(75, 229, 216, .1), transparent 30rem),
+        var(--bg);
+      color: var(--text);
+      font-family: var(--display);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    body.menu-open { overflow: hidden; }
+    img { display: block; width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    :focus-visible { outline: 3px solid var(--cyan); outline-offset: 4px; }
+    ::selection { background: var(--cyan); color: #03100f; }
+    .container { width: min(calc(100% - 40px), var(--max)); margin-inline: auto; }
+    .section { padding: 112px 0; }
+    .section-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+      color: var(--cyan);
+      font-family: var(--mono);
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    .section-kicker::before {
+      width: 24px;
+      height: 1px;
+      background: currentColor;
+      content: "";
+    }
+    .section-heading { max-width: 760px; margin-bottom: 44px; }
+    .section-heading h2 {
+      font-size: clamp(2rem, 4.5vw, 3.75rem);
+      line-height: 1.06;
+      letter-spacing: -.045em;
+    }
+    .section-heading p {
+      max-width: 660px;
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 1.04rem;
+    }
+    .btn {
+      display: inline-flex;
+      min-height: 48px;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      padding: 12px 19px;
+      font-size: .9rem;
+      font-weight: 800;
+      transition: transform .2s ease, border-color .2s ease, background .2s ease, box-shadow .2s ease;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--cyan), #65b7ff);
+      box-shadow: 0 12px 34px rgba(75, 229, 216, .18);
+      color: #041112;
+    }
+    .btn-secondary { border-color: var(--line); background: rgba(255, 255, 255, .035); }
+    .btn-secondary:hover { border-color: var(--line-strong); background: rgba(75, 229, 216, .07); }
+    .arrow { transition: transform .2s ease; }
+    a:hover .arrow { transform: translateX(4px); }
+
+    /* Header */
+    .site-header {
+      position: fixed;
+      z-index: 100;
+      inset: 0 0 auto;
+      border-bottom: 1px solid var(--line);
+      background: rgba(5, 11, 20, .8);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+    .nav { display: flex; min-height: 76px; align-items: center; justify-content: space-between; gap: 28px; }
+    .brand { display: inline-flex; align-items: center; gap: 12px; font-size: 1.04rem; font-weight: 800; letter-spacing: -.03em; }
+    .brand-mark {
+      display: grid;
+      width: 34px;
+      height: 34px;
+      place-items: center;
+      border: 1px solid rgba(75, 229, 216, .5);
+      border-radius: 11px;
+      background: linear-gradient(145deg, rgba(75, 229, 216, .22), rgba(93, 169, 255, .06));
+      color: var(--cyan);
+      font-family: var(--mono);
+      font-weight: 700;
+      box-shadow: inset 0 0 18px rgba(75, 229, 216, .08);
+    }
+    .brand small { display: block; color: var(--muted); font-size: .58rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+    .brand em { color: var(--cyan); font-style: normal; }
+    .nav-links { display: flex; align-items: center; gap: 28px; }
+    .nav-links a { color: var(--muted); font-size: .84rem; font-weight: 700; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-contact { display: flex; align-items: center; gap: 10px; }
+    .nav-contact .btn { min-height: 42px; padding: 9px 15px; font-size: .78rem; }
+    .menu-button {
+      display: none;
+      width: 44px;
+      height: 44px;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--panel);
+      color: var(--text);
+      cursor: pointer;
+    }
+    .menu-button span, .menu-button::before, .menu-button::after {
+      width: 20px;
+      height: 2px;
+      background: currentColor;
+      content: "";
+      transition: transform .2s ease, opacity .2s ease;
+    }
+    .menu-button { gap: 4px; }
+    .menu-button.open span { opacity: 0; }
+    .menu-button.open::before { transform: translateY(6px) rotate(45deg); }
+    .menu-button.open::after { transform: translateY(-6px) rotate(-45deg); }
+
+    /* Hero */
+    .hero { position: relative; overflow: hidden; padding: 156px 0 86px; }
+    .hero::before {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(119, 167, 201, .045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(119, 167, 201, .045) 1px, transparent 1px);
+      background-size: 62px 62px;
+      mask-image: linear-gradient(to bottom, #000, transparent 86%);
+      content: "";
+      pointer-events: none;
+    }
+    .hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.12fr .88fr; align-items: center; gap: 72px; }
+    .availability {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 24px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 7px 12px;
+      background: rgba(10, 24, 39, .72);
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: .68rem;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+    .availability i {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 16px var(--cyan);
+    }
+    .hero h1 {
+      max-width: 780px;
+      font-size: clamp(3rem, 6.2vw, 6.15rem);
+      line-height: .96;
+      letter-spacing: -.065em;
+    }
+    .hero h1 span {
+      display: block;
+      background: linear-gradient(100deg, var(--cyan), #8ac8ff 65%, var(--text));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .hero-copy {
+      max-width: 680px;
+      margin-top: 25px;
+      color: var(--muted);
+      font-size: clamp(1rem, 1.7vw, 1.2rem);
+    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+    .hero-trust { display: flex; flex-wrap: wrap; gap: 22px; margin-top: 38px; color: var(--muted); font-size: .76rem; font-weight: 700; }
+    .hero-trust span { display: inline-flex; align-items: center; gap: 8px; }
+    .hero-trust span::before { color: var(--cyan); content: "✓"; }
+    .hero-visual { position: relative; min-height: 570px; }
+    .hero-frame {
+      position: absolute;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: var(--panel-strong);
+      box-shadow: var(--shadow);
+    }
+    .hero-frame::after { position: absolute; inset: 0; box-shadow: inset 0 0 0 1px rgba(255,255,255,.04); content: ""; pointer-events: none; }
+    .hero-frame img { height: 100%; object-fit: cover; }
+    .hero-frame-main { inset: 0 82px 42px 0; }
+    .hero-frame-main img { object-position: center top; }
+    .hero-frame-mini { z-index: 2; right: 0; bottom: 0; width: 48%; height: 46%; border-radius: 20px; }
+    .hero-frame-mini img { object-position: center top; }
+    .visual-badge {
+      position: absolute;
+      z-index: 3;
+      top: 24px;
+      right: 40px;
+      border: 1px solid var(--line-strong);
+      border-radius: 12px;
+      padding: 10px 13px;
+      background: rgba(5, 11, 20, .9);
+      box-shadow: 0 14px 34px rgba(0,0,0,.35);
+      color: var(--cyan);
+      font-family: var(--mono);
+      font-size: .68rem;
+      line-height: 1.4;
+      text-transform: uppercase;
+    }
+
+    /* Metrics */
+    .metrics { position: relative; z-index: 2; margin-top: 22px; }
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(8, 19, 33, .82);
+      box-shadow: 0 20px 55px rgba(0, 0, 0, .2);
+    }
+    .metric { padding: 23px 25px; border-right: 1px solid var(--line); }
+    .metric:last-child { border: 0; }
+    .metric strong { display: block; color: var(--text); font-size: 1.55rem; line-height: 1.1; }
+    .metric span { color: var(--muted); font-size: .72rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+
+    /* Portals */
+    .portals { border-top: 1px solid var(--line); background: linear-gradient(180deg, rgba(10, 22, 37, .7), transparent 30%); }
+    .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 30px; }
+    .filter {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 8px 14px;
+      background: transparent;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: .67rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .filter:hover, .filter.active { border-color: var(--cyan); background: var(--cyan); color: #041312; }
+    .portal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .portal-card {
+      position: relative;
+      display: flex;
+      min-height: 480px;
+      overflow: hidden;
+      align-items: flex-end;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel-strong);
+      box-shadow: 0 16px 44px rgba(0,0,0,.18);
+      transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+    }
+    .portal-card:hover { transform: translateY(-7px); border-color: var(--line-strong); box-shadow: 0 26px 70px rgba(0,0,0,.3); }
+    .portal-card[hidden] { display: none; }
+    .portal-card .cover { position: absolute; inset: 0; height: 100%; object-fit: cover; object-position: top center; transition: transform .55s ease; }
+    .portal-card:hover .cover { transform: scale(1.035); }
+    .portal-card::before {
+      position: absolute;
+      z-index: 1;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(4,10,17,.04) 28%, rgba(4,10,17,.78) 67%, #050b14 100%);
+      content: "";
+    }
+    .portal-content { position: relative; z-index: 2; width: 100%; padding: 24px; }
+    .portal-meta { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; }
+    .portal-category { color: var(--cyan); font-family: var(--mono); font-size: .65rem; letter-spacing: .08em; text-transform: uppercase; }
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid rgba(75, 229, 216, .28);
+      border-radius: 999px;
+      padding: 4px 8px;
+      background: rgba(5, 11, 20, .62);
+      color: #aef7ef;
+      font-family: var(--mono);
+      font-size: .57rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .status::before { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); content: ""; }
+    .portal-content h3 { font-size: 1.3rem; line-height: 1.15; letter-spacing: -.03em; }
+    .portal-content p { min-height: 43px; margin-top: 8px; color: #bdcbd7; font-size: .82rem; }
+    .portal-cta { display: inline-flex; align-items: center; gap: 8px; margin-top: 17px; color: var(--text); font-size: .78rem; font-weight: 800; }
+    .dev-card {
+      min-height: 340px;
+      align-items: stretch;
+      border-style: dashed;
+      background:
+        linear-gradient(145deg, rgba(255,177,92,.08), transparent 55%),
+        var(--panel);
+    }
+    .dev-card::before { background: linear-gradient(145deg, rgba(255,177,92,.07), transparent); }
+    .dev-inner { position: relative; z-index: 2; display: flex; width: 100%; flex-direction: column; justify-content: space-between; padding: 28px; }
+    .dev-icon {
+      display: grid;
+      width: 62px;
+      height: 62px;
+      place-items: center;
+      border: 1px solid rgba(255,177,92,.32);
+      border-radius: 18px;
+      background: rgba(255,177,92,.08);
+      color: var(--amber);
+      font-family: var(--mono);
+      font-size: .76rem;
+      font-weight: 700;
+    }
+    .status-dev { border-color: rgba(255,177,92,.34); color: #ffd6a9; }
+    .status-dev::before { background: var(--amber); }
+    .dev-card p { margin-top: 10px; color: var(--muted); font-size: .86rem; }
+    .dev-progress { height: 5px; overflow: hidden; border-radius: 20px; background: rgba(255,255,255,.08); }
+    .dev-progress span { display: block; width: 62%; height: 100%; background: linear-gradient(90deg, var(--amber), #ff7c60); }
+
+    /* Bot */
+    .bot-section { position: relative; overflow: hidden; border-block: 1px solid var(--line); background: #07111d; }
+    .bot-section::after { position: absolute; width: 520px; height: 520px; right: -220px; top: -120px; border-radius: 50%; background: rgba(75,229,216,.08); filter: blur(50px); content: ""; }
+    .bot-grid { position: relative; z-index: 1; display: grid; grid-template-columns: .9fr 1.1fr; align-items: center; gap: 70px; }
+    .bot-photo {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 4 / 5;
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      background: var(--panel-strong);
+      box-shadow: var(--shadow);
+    }
+    .bot-photo img { height: 100%; object-fit: cover; object-position: center 45%; }
+    .bot-photo::after { position: absolute; inset: 0; box-shadow: inset 0 -100px 100px rgba(3,7,12,.42); content: ""; }
+    .bot-live {
+      position: absolute;
+      z-index: 2;
+      left: 24px;
+      bottom: 24px;
+      border: 1px solid var(--line-strong);
+      border-radius: 12px;
+      padding: 10px 13px;
+      background: rgba(4,10,18,.88);
+      color: var(--cyan);
+      font-family: var(--mono);
+      font-size: .64rem;
+      text-transform: uppercase;
+    }
+    .bot-copy h2 { font-size: clamp(2.3rem, 5vw, 4.8rem); line-height: 1; letter-spacing: -.055em; }
+    .bot-copy h2 span { color: var(--cyan); }
+    .bot-copy > p { margin-top: 21px; color: var(--muted); font-size: 1.03rem; }
+    .bot-specs { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 28px 0; }
+    .bot-specs span { border: 1px solid var(--line); border-radius: 12px; padding: 11px 13px; color: #c6d4df; font-family: var(--mono); font-size: .68rem; }
+
+    /* Capability */
+    .capability-grid { display: grid; grid-template-columns: 1fr 1fr; align-items: stretch; gap: 22px; }
+    .capability-copy, .capability-image {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+    }
+    .capability-copy { display: flex; flex-direction: column; justify-content: center; padding: clamp(28px, 5vw, 62px); }
+    .capability-copy h2 { font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.05; letter-spacing: -.045em; }
+    .capability-copy p { margin: 18px 0 26px; color: var(--muted); }
+    .capability-list { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+    .capability-list span { border: 1px solid var(--line); border-radius: 999px; padding: 6px 10px; color: #c7d4df; font-family: var(--mono); font-size: .62rem; }
+    .capability-image { min-height: 600px; }
+    .capability-image img { height: 100%; object-fit: cover; object-position: center top; }
+
+    /* Contact */
+    .contact { padding-top: 70px; }
+    .contact-box {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--line-strong);
+      border-radius: 28px;
+      padding: clamp(34px, 7vw, 78px);
+      background:
+        radial-gradient(circle at 90% 0, rgba(75,229,216,.18), transparent 28rem),
+        linear-gradient(140deg, #0b2031, #081421 60%);
+      box-shadow: var(--shadow);
+    }
+    .contact-box::after {
+      position: absolute;
+      width: 340px;
+      height: 340px;
+      right: -160px;
+      bottom: -210px;
+      border: 1px solid rgba(75,229,216,.24);
+      border-radius: 50%;
+      box-shadow: 0 0 0 45px rgba(75,229,216,.025), 0 0 0 90px rgba(75,229,216,.02);
+      content: "";
+    }
+    .contact-box h2 { max-width: 800px; font-size: clamp(2.2rem, 5vw, 4.8rem); line-height: 1.02; letter-spacing: -.055em; }
+    .contact-box > p { max-width: 650px; margin: 18px 0 30px; color: var(--muted); font-size: 1.03rem; }
+    .contact-actions { position: relative; z-index: 2; display: flex; flex-wrap: wrap; gap: 12px; }
+    .contact-details { position: relative; z-index: 2; display: flex; flex-wrap: wrap; gap: 24px; margin-top: 30px; color: #c1d0dc; font-family: var(--mono); font-size: .72rem; }
+    .contact-details a:hover { color: var(--cyan); }
+
+    /* Footer */
+    footer { padding: 38px 0; border-top: 1px solid var(--line); }
+    .footer-row { display: flex; align-items: center; justify-content: space-between; gap: 30px; }
+    .footer-copy { color: var(--muted); font-size: .72rem; text-align: right; }
+
+    @media (max-width: 1050px) {
+      .nav-links { display: none; }
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-copy { max-width: 760px; }
+      .hero-visual { width: min(100%, 680px); min-height: 650px; margin-top: 10px; }
+      .portal-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 760px) {
+      .container { width: min(calc(100% - 28px), var(--max)); }
+      .section { padding: 82px 0; }
+      .nav-contact { display: none; }
+      .menu-button { display: grid; }
+      .nav-links {
+        position: fixed;
+        inset: 76px 0 auto;
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        border-bottom: 1px solid var(--line);
+        padding: 18px 24px 28px;
+        background: rgba(5,11,20,.98);
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 1rem; }
+      .nav-links .mobile-contact { display: inline-flex; margin-top: 16px; border: 0; color: #041112; }
+      .hero { padding-top: 126px; }
+      .hero h1 { font-size: clamp(2.8rem, 15vw, 4.7rem); }
+      .hero-grid { gap: 48px; }
+      .hero-visual { min-height: 530px; }
+      .hero-frame-main { right: 38px; }
+      .hero-frame-mini { width: 50%; height: 42%; }
+      .visual-badge { top: 18px; right: 14px; }
+      .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+      .metric:nth-child(2) { border-right: 0; }
+      .metric:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+      .portal-grid, .bot-grid, .capability-grid { grid-template-columns: 1fr; }
+      .portal-card { min-height: 500px; }
+      .bot-grid { gap: 42px; }
+      .bot-photo { width: min(100%, 560px); }
+      .capability-image { min-height: 520px; }
+      .footer-row { align-items: flex-start; flex-direction: column; }
+      .footer-copy { text-align: left; }
+    }
+    @media (max-width: 480px) {
+      .hero-actions .btn, .contact-actions .btn { width: 100%; }
+      .hero-trust { gap: 12px; flex-direction: column; }
+      .hero-visual { min-height: 450px; }
+      .hero-frame-main { right: 24px; bottom: 24px; }
+      .hero-frame-mini { height: 38%; }
+      .visual-badge { display: none; }
+      .metric { padding: 18px; }
+      .portal-grid { gap: 15px; }
+      .portal-card { min-height: 460px; }
+      .bot-specs { grid-template-columns: 1fr; }
+      .contact-details { flex-direction: column; gap: 10px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body id="top">
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="#top" aria-label="HERO.IA HUB — início">
+        <span class="brand-mark">H</span>
+        <span>HERO<em>.IA</em><small>Ecosystem Hub</small></span>
+      </a>
+      <nav class="nav-links" id="navLinks" aria-label="Navegação principal">
+        <a href="#ecossistema">Ecossistema</a>
+        <a href="#hero-bot">HERO.Bot</a>
+        <a href="#engenharia">Engenharia</a>
+        <a href="#contato">Contato</a>
+        <a class="btn btn-primary mobile-contact" href="https://wa.me/5521985653880?text=Ol%C3%A1%2C%20vim%20pelo%20HUB%20HERO.IA%20e%20gostaria%20de%20conversar." target="_blank" rel="noopener">Falar no WhatsApp</a>
+      </nav>
+      <div class="nav-contact">
+        <a class="btn btn-secondary" href="mailto:hero.ia.copiloto@gmail.com">E-mail</a>
+        <a class="btn btn-primary" href="https://wa.me/5521985653880?text=Ol%C3%A1%2C%20vim%20pelo%20HUB%20HERO.IA%20e%20gostaria%20de%20conversar." target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+      <button class="menu-button" id="menuButton" type="button" aria-label="Abrir menu" aria-controls="navLinks" aria-expanded="false"><span></span></button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container hero-grid">
+        <div>
+          <div class="availability"><i></i> Ecossistema ativo e em evolução contínua</div>
+          <h1 id="hero-title">Um ecossistema.<span>Múltiplas soluções.</span></h1>
+          <p class="hero-copy">A HERO.IA transforma problemas reais em produtos digitais, automações, inteligência artificial, dispositivos conectados e protótipos físicos — tudo reunido em um único ponto de acesso.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#ecossistema">Explorar o ecossistema <span class="arrow">→</span></a>
+            <a class="btn btn-secondary" href="https://wa.me/5521985653880?text=Ol%C3%A1%2C%20quero%20conhecer%20melhor%20as%20solu%C3%A7%C3%B5es%20HERO.IA." target="_blank" rel="noopener">Conversar com a HERO.IA</a>
+          </div>
+          <div class="hero-trust">
+            <span>Produtos funcionais</span>
+            <span>IA aplicada</span>
+            <span>Software + hardware</span>
+          </div>
+        </div>
+        <div class="hero-visual" aria-label="Visão do ecossistema HERO.IA">
+          <figure class="hero-frame hero-frame-main">
+            <img src="Imagens/hero-ia.jpg" alt="Apresentação visual do ecossistema HERO.IA" width="768" height="1364" fetchpriority="high">
+          </figure>
+          <figure class="hero-frame hero-frame-mini">
+            <img src="Imagens/hero-familyos.jpg" alt="HERO FamilyOS, solução do ecossistema HERO.IA" width="843" height="1264">
+          </figure>
+          <span class="visual-badge">HERO.IA / HUB<br>Conectando soluções</span>
+        </div>
+      </div>
+      <div class="container metrics">
+        <div class="metrics-grid">
+          <div class="metric"><strong>09</strong><span>destinos publicados</span></div>
+          <div class="metric"><strong>IA + IoT</strong><span>tecnologia integrada</span></div>
+          <div class="metric"><strong>Full stack</strong><span>da ideia ao deploy</span></div>
+          <div class="metric"><strong>01</strong><span>projeto em desenvolvimento</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section portals" id="ecossistema">
+      <div class="container">
+        <div class="section-heading">
+          <span class="section-kicker">Diretório oficial</span>
+          <h2>Todos os caminhos do ecossistema HERO.IA</h2>
+          <p>Escolha uma frente, conheça a solução e acesse diretamente seu ambiente. Todos os destinos abaixo estão disponíveis; somente a MCU Calculadora permanece em desenvolvimento.</p>
+        </div>
+        <div class="filters" role="group" aria-label="Filtrar destinos">
+          <button class="filter active" type="button" data-filter="all">Todos</button>
+          <button class="filter" type="button" data-filter="institucional">Institucional</button>
+          <button class="filter" type="button" data-filter="ia">IA & automação</button>
+          <button class="filter" type="button" data-filter="engenharia">Engenharia</button>
+        </div>
+        <div class="portal-grid" id="portalGrid">
+          <a class="portal-card" data-category="ia" href="http://hero.ia.br/heroia/" target="_blank" rel="noopener">
+            <img class="cover" src="Imagens/hero-copilot.jpg" alt="HERO.IA Hotpage Sale, copiloto comercial inteligente" width="1290" height="2286" loading="lazy">
+            <div class="portal-content">
+              <div class="portal-meta"><span class="portal-category">IA & vendas</span><span class="status">Disponível</span></div>
+              <h3>HERO.IA Hotpage Sale</h3>
+              <p>Apresentação comercial da inteligência que acelera atendimento, relacionamento e vendas.</p>
+              <span class="portal-cta">Acessar solução <span class="arrow">→</span></span>
+            </div>
+          </a>
+
+          <a class="portal-card" data-category="institucional" href="http://hero.ia.br/HERO.IA/" target="_blank" rel="noopener">
+            <img class="cover" src="Imagens/hero-ecosystem-mls.jpg" alt="Apresentação institucional do ecossistema HERO.IA" width="768" height="1364" loading="lazy">
+            <div class="portal-content">
+              <div class="portal-meta"><span class="portal-category">Institucional</span><span class="status">Disponível</span></div>
+              <h3>HERO.IA Institucional</h3>
+              <p>Visão, posicionamento e capacidades que sustentam o ecossistema de soluções HERO.IA.</p>
+              <span class="portal-cta">Conhecer a HERO.IA <span class="arrow">→</span></span>
+            </div>
+          </a>
+
+          <a class="portal-card" data-category="institucional" href="http://hero.ia.br/hp_business/" target="_blank" rel="noopener">
+            <img class="cover" src="Imagens/hero-campaigns.jpg" alt="HERO.IA Business White Label para empresas" width="768" height="1362" loading="lazy">
+            <div class="portal-content">
+              <div class="portal-meta"><span class="portal-category">Business</span><span class="status">Disponível</span></div>
+              <h3>HERO.IA White Label</h3>
+              <p>Tecnologia HERO.IA adaptada à marca, operação e estratégia de cada empresa.</p>
+              <span class="portal-cta">Ver solução Business <span class="arrow">→</span></span>
+            </div>
+          </a>
+
+          <a class="portal-card" data-category="ia" href="http://hero.ia.br/heroia-installer/" target="_blank" rel="noopener">
+            <img class="cover" src="Imagens/hero-bot-states.jpg" alt="Instalação e estados inteligentes do ecossistema HERO.IA" width="768" height="1376" loading="lazy">
+            <div class="portal-content">
+              <div class="portal-meta"><span class="portal-category">Instalação</span><span class="status">Disponível</span></div>
+              <h3>HERO.IA Installer</h3>
+              <p>Ambiente de instalação para colocar os recursos HERO.IA em operação com agilidade.</p>
+              <span class="portal-cta">Abrir instalador <span class="arrow">→</span></span>
+            </div>
+          </a>
+
+          <a class="portal-card" data-category="engenharia" href="https://hero.ia.br/hero-bot/" target="_blank" rel="noopener">
+            <img class="cover" src="Imagens/hero-ia.jpg" alt="HERO.Bot, inteligência artificial com presença física" width="768" height="1364" loading="lazy">
+            <div class="portal-content">
+              <div class="portal-meta"><span class="portal-category">Robótica & IoT</span><span class="status">Disponível</span></div>
+              <h3>HERO.Bot</h3>
+              <p>Inteligência conectada a um dispositivo físico com ESP32-S3, display e estrutura 3D.</p>
+              <span class="portal-cta">Conhecer o HERO.Bot <span class="arrow">→</span></span>
+            </div>
+          </a>
+
+          <a class="portal-card" data-category="ia" href="http://hero.ia.br/prospect-leads/" target="_blank" rel="noopener">
+            <img class="cover" src="Imagens/hero-maps.jpg" alt="HERO.IA Prospect Leads com prospecção geográfica em mapas" width="768" height="1364" loading="lazy">
+            <div class="portal-content">
+              <div class="portal-meta"><span class="portal-category">Dados & mapas</span><span class="status">Disponível</span></div>
+              <h3>Prospect Leads on Map</h3>
+              <p>Prospecção visual e inteligência geográfica para encontrar oportunidades em mapas.</p>
+              <span class="portal-cta">Explorar o mapa <span class="arrow">→</span></span>
+            </div>
+          </a>
+
+          <a class="portal-card" data-category="ia" href="http://hero.ia.br/hero-os/trainer.jpg" target="_blank" rel="noopener">
+            <img class="cover" src="Imagens/hero-trainer.jpg" alt="HERO.IA Trainer, assistente para planejamento de treinos" width="1290" height="1928" loading="lazy">
+            <div class="portal-content">
+              <div class="portal-meta"><span class="portal-category">Performance</span><span class="status">Disponível</span></div>
+              <h3>HERO.IA Trainer</h3>
+              <p>Inteligência aplicada ao planejamento e acompanhamento de uma rotina de treinamento.</p>
+              <span class="portal-cta">Conhecer o Trainer <span class="arrow">→</span></span>
+            </div>
+          </a>
+
+          <a class="portal-card" data-category="engenharia" href="https://hero.ia.br/Hero-3D-Pint-Ideias/" target="_blank" rel="noopener">
+            <img class="cover" src="Imagens/hero-3d.jpg" alt="HERO 3D Print Ideias, modelagem e impressão 3D" width="768" height="1376" loading="lazy">
+            <div class="portal-content">
+              <div class="portal-meta"><span class="portal-category">Prototipagem 3D</span><span class="status">Disponível</span></div>
+              <h3>HERO 3D Print Ideias</h3>
+              <p>Modelagem, impressão 3D e prototipagem para transformar conceitos em objetos reais.</p>
+              <span class="portal-cta">Explorar ideias 3D <span class="arrow">→</span></span>
+            </div>
+          </a>
+
+          <a class="portal-card" data-category="engenharia" href="https://hero.ia.br/informatica/" target="_blank" rel="noopener">
+            <img class="cover" src="Imagens/hero-desenvolve.jpg" alt="Desenvolvimento de novos sistemas pela HERO.IA" width="941" height="1672" loading="lazy">
+            <div class="portal-content">
+              <div class="portal-meta"><span class="portal-category">Software sob medida</span><span class="status">Disponível</span></div>
+              <h3>Novos Sistemas</h3>
+              <p>Desenvolvimento de soluções digitais, IA, automação e tecnologia sob medida.</p>
+              <span class="portal-cta">Apresentar um projeto <span class="arrow">→</span></span>
+            </div>
+          </a>
+
+          <article class="portal-card dev-card" data-category="engenharia">
+            <div class="dev-inner">
+              <div class="dev-icon">MCU</div>
+              <div>
+                <div class="portal-meta"><span class="portal-category">Ferramenta técnica</span><span class="status status-dev">Em desenvolvimento</span></div>
+                <h3>MCU Calculadora</h3>
+                <p>Nova ferramenta de cálculo e apoio a projetos com microcontroladores. Este é o único sistema do HUB ainda em desenvolvimento.</p>
+              </div>
+              <div class="dev-progress" aria-label="Desenvolvimento em andamento"><span></span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section bot-section" id="hero-bot">
+      <div class="container bot-grid">
+        <figure class="bot-photo">
+          <img src="Imagens/hero-bot-photo.jpg" alt="Fotografia real do robô HERO.Bot com display e estrutura impressa em 3D" width="2268" height="4032" loading="lazy">
+          <figcaption class="bot-live">Protótipo real • operacional</figcaption>
+        </figure>
+        <div class="bot-copy">
+          <span class="section-kicker">Hardware encontra inteligência</span>
+          <h2>HERO.BOT<br><span>ESP32-S3</span></h2>
+          <p>O robô que dá presença física ao ecossistema HERO.IA. Um protótipo real que combina firmware, conectividade, interface visual, estados inteligentes e fabricação por impressão 3D.</p>
+          <div class="bot-specs">
+            <span>ESP32-S3</span>
+            <span>Wi-Fi integrado</span>
+            <span>Display inteligente</span>
+            <span>Estrutura impressa em 3D</span>
+            <span>Estados em tempo real</span>
+            <span>Firmware customizado</span>
+          </div>
+          <a class="btn btn-primary" href="https://hero.ia.br/hero-bot/" target="_blank" rel="noopener">Explorar o HERO.Bot <span class="arrow">→</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="engenharia">
+      <div class="container capability-grid">
+        <div class="capability-copy">
+          <span class="section-kicker">Engenharia integrada</span>
+          <h2>Do desafio real à solução funcional.</h2>
+          <p>A HERO.IA reúne estratégia, produto, software, inteligência artificial e engenharia para criar soluções que atravessam a tela e chegam à operação.</p>
+          <div class="capability-list" aria-label="Capacidades técnicas">
+            <span>IA generativa</span>
+            <span>Aplicações web</span>
+            <span>Automação</span>
+            <span>Banco de dados</span>
+            <span>APIs</span>
+            <span>Mapas</span>
+            <span>ESP32</span>
+            <span>Firmware</span>
+            <span>IoT</span>
+            <span>Impressão 3D</span>
+          </div>
+          <a class="btn btn-secondary" href="https://hero.ia.br/informatica/" target="_blank" rel="noopener">Conhecer desenvolvimento sob medida <span class="arrow">→</span></a>
+        </div>
+        <figure class="capability-image">
+          <img src="Imagens/hero-desenvolve.jpg" alt="Capacidades da HERO.IA para desenvolver novos sistemas" width="941" height="1672" loading="lazy">
+        </figure>
+      </div>
+    </section>
+
+    <section class="section contact" id="contato">
+      <div class="container">
+        <div class="contact-box">
+          <span class="section-kicker">Vamos construir</span>
+          <h2>Seu próximo sistema pode começar aqui.</h2>
+          <p>Conte o desafio. A HERO.IA ajuda a transformar a necessidade em arquitetura, protótipo e solução pronta para operar.</p>
+          <div class="contact-actions">
+            <a class="btn btn-primary" href="https://wa.me/5521985653880?text=Ol%C3%A1%2C%20vim%20pelo%20HUB%20HERO.IA%20e%20quero%20conversar%20sobre%20um%20projeto." target="_blank" rel="noopener">Iniciar conversa no WhatsApp <span class="arrow">→</span></a>
+            <a class="btn btn-secondary" href="mailto:hero.ia.copiloto@gmail.com?subject=Contato%20pelo%20HUB%20HERO.IA">Enviar e-mail</a>
+          </div>
+          <div class="contact-details">
+            <a href="tel:+5521985653880">+55 21 98565-3880</a>
+            <a href="mailto:hero.ia.copiloto@gmail.com">hero.ia.copiloto@gmail.com</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-row">
+      <a class="brand" href="#top" aria-label="Voltar ao início">
+        <span class="brand-mark">H</span>
+        <span>HERO<em>.IA</em><small>Ecosystem Hub</small></span>
+      </a>
+      <p class="footer-copy">© <span id="year"></span> HERO.IA — Inteligência para resolver. Engenharia para realizar.<br>hero.ia.br</p>
+    </div>
+  </footer>
+
+  <script>
+    const menuButton = document.getElementById("menuButton");
+    const navLinks = document.getElementById("navLinks");
+
+    menuButton.addEventListener("click", () => {
+      const open = navLinks.classList.toggle("open");
+      menuButton.classList.toggle("open", open);
+      menuButton.setAttribute("aria-expanded", String(open));
+      menuButton.setAttribute("aria-label", open ? "Fechar menu" : "Abrir menu");
+      document.body.classList.toggle("menu-open", open);
+    });
+
+    navLinks.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        navLinks.classList.remove("open");
+        menuButton.classList.remove("open");
+        menuButton.setAttribute("aria-expanded", "false");
+        menuButton.setAttribute("aria-label", "Abrir menu");
+        document.body.classList.remove("menu-open");
+      });
+    });
+
+    document.querySelectorAll(".filter").forEach((button) => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll(".filter").forEach((item) => item.classList.remove("active"));
+        button.classList.add("active");
+        const category = button.dataset.filter;
+
+        document.querySelectorAll(".portal-card").forEach((card) => {
+          card.hidden = category !== "all" && card.dataset.category !== category;
+        });
+      });
+    });
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
